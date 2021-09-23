@@ -29,7 +29,7 @@ try {
     options.IZWCompression = true;
 
     for (i = 0; i < app.documents.length; i++) {
-      var newFile = createNewFile(app.documents[i].name, '.tif', destinationFolder);
+      var newFile = new File(destinationFolder.fullName +"/" + app.documents[i].name + '.tiff');
       app.documents[i].exportFile(newFile, ExportType.TIFF, options);
     }
   } else {
