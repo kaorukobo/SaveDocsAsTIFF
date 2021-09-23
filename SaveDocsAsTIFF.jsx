@@ -6,16 +6,20 @@
 /*  Description: saves all open Illustrator documents as TIFF files   */
 /**********************************************************************/
 
+var doesConfirmBeforeSave = false;
+
 try {
   if (app.documents.length > 0) {
-    var destinationFolder = Folder(app.activeDocument.path).selectDlg();
+    var destinationFolder = Folder(app.activeDocument.path);
     if (!destinationFolder || destinationFolder === null) {
       throw new Error('Destination folder was not set or does not exist.');
     }
 
-    var confirmAction = confirm('This will overwrite TIFF files with the same file name, continue?');
-    if (!confirmAction) {
-      throw new Error('Operation cancelled');
+    if (doesConfirmBeforeSave) {
+      var confirmAction = confirm('This will overwrite TIFF files with the same file name, continue?');
+      if (!confirmAction) {
+        throw new Error('Operation cancelled');
+      }
     }
 
     var options = new ExportOptionsTIFF();
@@ -25,8 +29,6 @@ try {
       var newFile = createNewFile(app.documents[i].name, '.tif', destinationFolder);
       app.documents[i].exportFile(newFile, ExportType.TIFF, options);
     }
-
-    alert('Successfully exported the TIFF files.');
   } else {
     throw new Error('No documents are open.');
   }
