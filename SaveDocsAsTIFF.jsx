@@ -24,6 +24,9 @@ try {
 
     var options = new ExportOptionsTIFF();
     options.resolution = 300.0;
+    options.saveMultipleArtboards = true;
+    options.imageColorSpace = ImageColorSpace.CMYK;
+    options.IZWCompression = true;
 
     for (i = 0; i < app.documents.length; i++) {
       var newFile = createNewFile(app.documents[i].name, '.tif', destinationFolder);
